@@ -7,6 +7,7 @@ import com.example.unfilter.repos.DeviceRepository.{All, Create}
 import com.amazonaws.services.sns.model.{ListEndpointsByPlatformApplicationRequest, CreatePlatformEndpointRequest}
 
 import scala.collection.JavaConversions._
+import com.example.unfilter.models.Device
 
 class DeviceRepository extends Actor {
   implicit val formats = DefaultFormats
