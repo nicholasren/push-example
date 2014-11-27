@@ -48,13 +48,27 @@ GET  http://localhost:8080/devices
 ```
 POST  http://localhost:8080/notifications
 
+
 {
-  "target": "arn:aws:sns:ap-southeast-2:369407384105:endpoint/APNS_SANDBOX/xiaojun_push/d81ba6c5-d462-3f0c-bfef-54e9552872bf",
-  "text": "this is xiaojun from API",
-  "title": "this is xiaojun from API"
+  "target":"arn:aws:sns:ap-southeast-2:369407384105:endpoint/GCM/xiaojun_push_android/387ac670-8750-30d4-8d5b-0a0a1e90b2ca",
+  "subject" : "lalala",
+  "message": "hope not disturb you :)"
 }
 ```
 
+{
+  "target":"arn:aws:sns:ap-southeast-2:369407384105:endpoint/APNS_SANDBOX/xiaojun_push/d81ba6c5-d462-3f0c-bfef-54e9552872bf",
+  "subject" : "lalala",
+  "message": "hope not disturb you :)"
+}
+
+
+###### endpoints:
+```
+android: arn:aws:sns:ap-southeast-2:369407384105:endpoint/GCM/xiaojun_push_android/387ac670-8750-30d4-8d5b-0a0a1e90b2ca
+
+applie:  arn:aws:sns:ap-southeast-2:369407384105:endpoint/APNS_SANDBOX/xiaojun_push/d81ba6c5-d462-3f0c-bfef-54e9552872bf
+```
 
 
 Thoughts on Actor:

@@ -13,7 +13,7 @@ import unfiltered.request.{Seg, POST}
 import unfiltered.filter.Plan
 
 
-import com.example.unfilter.repos.DeviceRepository
+import com.example.unfilter.repos.{NotificationSender, DeviceRepository}
 import com.example.unfilter.repos.DeviceRepository._
 
 
@@ -23,12 +23,14 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import org.json4s.JsonAST.{JArray, JString}
 import org.json4s.native.JsonMethods.{render, compact}
 import org.json4s.JValue
+import com.example.unfilter.repos.NotificationSender.Push
 
 object PushApi extends Plan {
 
   implicit val system = ActorSystem("system")
-  implicit val timeout = Timeout(5 seconds)
+  implicit val timeout = Timeout(10 seconds)
   val register = system.actorOf(Props[DeviceRepository])
+  val sender = system.actorOf(Props[NotificationSender])
 
   def intent = {
     case req @ POST(Path(Seg("devices" :: Nil))) => {
@@ -42,6 +44,12 @@ object PushApi extends Plan {
         map { arns =>pretty(JArray(arns.map(JString(_)))) }
 
       Ok ~> ResponseString(waitFor(response))
+    }
+
+    case req @ POST(Path(Seg("notifications" :: Nil))) => {
+      val response = (sender? Push(Body.string(req))).mapTo[String]
+
+      Created ~> ResponseString(waitFor(response))
     }
   }
 
